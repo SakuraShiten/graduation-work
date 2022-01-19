@@ -1,0 +1,26 @@
+.main-block {
+  width: 100%;
+  height: 89vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.main-block__content {
+  width: 98%;
+  height: 95%;
+
+  background-image: url("fon.jpg");
+  border-radius: 14px;
+
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.main-block__footer {
+  display: flex;
+  
+}

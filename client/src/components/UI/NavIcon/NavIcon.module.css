@@ -1,0 +1,12 @@
+.icon {
+  cursor: pointer;
+  position: absolute;
+  left: 77px;
+  top: center;
+  background-image: url("icon.svg");
+  width: 160px;
+  height: 67px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}

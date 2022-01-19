@@ -1,0 +1,14 @@
+.navBar {
+  width: 100%;
+  height: 11vh;
+  background: #252525;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.navBar__content {
+  width: 709px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
