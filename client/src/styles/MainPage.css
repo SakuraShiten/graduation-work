@@ -4,16 +4,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background:rgb(238, 238, 238);
 }
+
 .main-block__content {
-  width: 98%;
-  height: 95%;
-
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
   background-image: url("fon.jpg");
-  border-radius: 14px;
-
+ 
   background-repeat: no-repeat;
-  background-position: top;
+  background-position: 0px -20px;
+
   background-size: cover;
   display: flex;
   flex-direction: column;
@@ -22,5 +24,58 @@
 
 .main-block__footer {
   display: flex;
-  
+  align-items: center;
+  height: 16vh;
+  justify-content: space-around;
+  background: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  text-align: center;
+  font-family: Rubik;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 28px;
+}
+.main-block__info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.main-block__info > h1 {
+  font-family: Rubik;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 54px;
+  line-height: 76px;
+  margin-top: 10vh;
+  color: #ffffff;
+  text-shadow: 0px 0px 7px #000000;
+}
+.main-block__info > h2 {
+  font-family: Rubik;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 48px;
+  margin-top: 5vh;
+  line-height: 57px;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0px 0px 7px #000000;
+}
+.main-block__info-list {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  margin-top: 3vh;
+  font-family: Rubik;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 26px;
+  line-height: 57px;
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration-line: underline;
+  text-shadow: 0px 0px 7px #000000;
+}
+.main-block__info-list > p::before {
+  content: " - ";
 }

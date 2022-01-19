@@ -1,11 +1,24 @@
 import React from 'react';
+import UniversalButton from '../components/UI/UniversalButton/UniversalButton';
 import '../styles/MainPage.css'
 
 function Main() {
     return <div className="main-block">
         <div className="main-block__content">
-            <div>
-
+            <div className="main-block__info">
+                <h1>Боулинг-ресторан в городе Салават</h1>
+                <h2>В нашем заведении Вы можете найти:</h2>
+                <div className="main-block__info-list">
+                    <p>Танцпол</p>
+                    <p>Караоке зал</p>
+                    <p>Большой банкетный зал</p>
+                    <p>Паровые коктейли</p>
+                </div>
+                {
+                    <UniversalButton styleWhite={true}>
+                        Забронировать
+                    </UniversalButton>
+                }
             </div>
             <div className="main-block__footer">
                 <p>
