@@ -1,0 +1,55 @@
+.booking-block {
+  width: 100%;
+  height: 89vh;
+  overflow: hidden;
+  background-image: url("fon.jpg");
+  background-repeat: no-repeat;
+  background-position: 0px -20px;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.booking-block > h2 {
+  margin-top: 3vh;
+  font-family: Rubik;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 43px;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 10px;
+}
+.booking-block__content {
+  margin-top: 4vh;
+  display: flex;
+  flex-direction: column;
+}
+.select-data-time {
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.199);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+.select-data-time.active {
+  display: flex;
+}
+.select-data-time__content {
+  padding: 20px 30px;
+  background: #e9e9e9;
+  border-radius: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  max-width: 900px;
+  flex-wrap: wrap
+}
