@@ -1,16 +1,14 @@
-import NavBar from "./components/NavBar";
-import Booking from "./pages/Booking";
-import Main from "./pages/Main";
-import News from "./pages/News"
+import NavBar from "./components/NavBar"
+import { BrowserRouter } from "react-router-dom";
+import AppRouter from "./components/AppRouter";
 
 function App() {
-
   return (
     <div>
-      <NavBar />
-      {/* <Main /> */}
-      {/* <News /> */}
-      <Booking />
+      <BrowserRouter>
+        <NavBar />
+        <AppRouter />
+      </BrowserRouter>
     </div>
   );
 }

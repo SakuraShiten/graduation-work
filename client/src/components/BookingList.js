@@ -35,7 +35,7 @@ function BookingList() {
     { placeholder: 'Телефон', data: "tel" },
     { placeholder: 'Почта', data: "email" }
   ]
-  const [dataTime, setDataTime] = useState('');
+  const [dataTime, setDataTime] = useState({});
 
   const [activeModalDay, setActiveModalDay] = useState(false);
   const [activeModalTimes, setActiveModalTimes] = useState(false);
@@ -43,17 +43,33 @@ function BookingList() {
 
   const formAccept = (e) => {
     e.preventDefault();
+    setDataTime({
+      day: activeCard,
+      times: [...selectTimes]
+    })
     console.log(selectTimes);
   }
 
   const selectCardTime = (item) => {
-    if (selectTimes.includes(item)) {
-      setSelectedTimes([...selectTimes.filter(t => t !== item)])
-      return
-    }
-    setSelectedTimes([...selectTimes, item]);
+
+    if (selectTimes.includes(item))
+      setSelectedTimes([...selectTimes.filter(t => t !== item)].sort())
+    else setSelectedTimes([...selectTimes, item].sort());
+
 
   }
+
+  var days = [
+    'Воскресенье',
+    'Понедельник',
+    'Вторник',
+    'Среда',
+    'Четверг',
+    'Пятница',
+    'Суббота'
+  ];
+  const d = new Date();
+  const n = d.getDay();
 
   const selectCardDay = (item) => {
     setActiveCard(item)
@@ -76,7 +92,7 @@ function BookingList() {
         placeholder="Дата и время"
         readOnly
         onClick={() => setActiveModalDay(true)}
-        value={dataTime}
+        value={activeCard && selectTimes[0] ? `${days[n]} - Выбранные часы: ${selectTimes.map(e => ' ' + e + ':00')}` : ""}
       />
       <UniversalButton type="submit" style={{ marginTop: 30 }}>Подтвердить бронь</UniversalButton>
       <Modal
@@ -91,6 +107,7 @@ function BookingList() {
             activeCard={item.dayNumber === activeCard}
             onClick={() => selectCardDay(item.dayNumber)}
           />)}
+
       </Modal>
 
       <Modal
@@ -105,9 +122,14 @@ function BookingList() {
             onClick={() => selectCardTime(item)}
             activeCard={selectTimes.includes(item)}
           />)}
+        <UniversalButton
+          onClick={() => setActiveModalTimes(false)}
+        >
+          Сохранить
+        </UniversalButton>
       </Modal>
 
-    </form>
+    </form >
   );
 }
 

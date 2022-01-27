@@ -2,22 +2,31 @@ import React, { useState } from 'react';
 import ButtonNavBar from './UI/ButtonNavBar/ButtonNavBar';
 import MyNavBar from './UI/NavbarDesign/NavbarDesign';
 import NavIcon from './UI/NavIcon/NavIcon';
-import pages from '../utils/pages' // поискать как правильно
+import { publicRoutes } from '../utils/const' // поискать как правильно
+import { useNavigate} from "react-router-dom";
 
 function Navbar() {
-    const [selectPage, setSelectedPage] = useState('main');
+    const [selectPage, setSelectedPage] = useState('/');
+    let navigate = useNavigate();
+    const changePage = (patch) => {
+        setSelectedPage(patch)
+        navigate(patch);
+    }
     return <div>
         <MyNavBar>
-            <NavIcon onClick={() => { setSelectedPage('main') }} />
-            {pages.map(page =>
+            <NavIcon onClick={() => { setSelectedPage('/') }} />
+            {publicRoutes.map(item =>
+
                 <ButtonNavBar
-                    key={page.url}
-                    onClick={() => { setSelectedPage(page.url) }}
+                    key={item.patch}
+                    onClick={() => { changePage(item.patch) }}
                     selectPage={selectPage}
-                    urlPage={page.url}
+                    urlPage={item.patch}
                 >
-                    {page.body}
-                </ButtonNavBar>)}
+                    {item.name}
+                </ButtonNavBar>
+
+            )}
         </MyNavBar>
     </div>;
 }
