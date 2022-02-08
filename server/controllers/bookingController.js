@@ -1,17 +1,21 @@
+const { find } = require('../models/Booking')
 const Booking = require('../models/Booking')
 const User = require('../models/User')
+const Client = require('../models/Client')
 
 class bookingController {
 
     async create(req, res) {
         const { service, data, time, about, id } = req.body
+        console.log(service, data, time, about, id)
         const booking = new Booking({ service, data, time, about, ownerClient: id })
         await booking.save()
         return res.json(booking)
     }
 
     async getAll(req, res) {
-        const bookings = await Booking.find()
+        const bookings = await Booking.find().populate('ownerClient')
+        console.log("asdasd")
         return res.json(bookings)
     }
 
@@ -21,7 +25,7 @@ class bookingController {
         await Booking.findByIdAndUpdate(id, { ownerUser: aut._id, status: "отменён" })
         return res.json({ message: `заказ отменён` })
     }
-    async getSpaces(req, res) {
+    async getSpacesTime(req, res) {
         const { day } = req.body
         const booking = await Booking.find({ data: day })
         const busy = [...booking.map(e => JSON.parse(e.time)).flat()]

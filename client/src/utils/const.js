@@ -20,3 +20,19 @@ export const publicRoutes = [
         name: "Забронировать"
     }
 ]
+
+export const bookingService = [
+    { value: "Боулинг" },
+    { value: "Караоке зал" },
+    { value: "Танцпол" }
+]
+
+export const nameDaysWeek = [
+    "Воскресенье",
+    "Понедельник",
+    "Вторник",
+    "Среда",
+    "Четверг",
+    "Пятница",
+    "Суббота",
+]

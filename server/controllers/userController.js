@@ -25,9 +25,18 @@ class userController {
         return res.json({ message: `пользователь ${deleteLogin} удалён` })
     }
     async getAll(req, res) {
-        const {login,password} = req.body
+        const { login, password } = req.body
         const users = await User.find();
         return res.json(users)
+    }
+    async check(req, res) {
+        const { login, password } = req.body
+        const user = await User.find({ login: login, password: password });
+        console.log(user)
+        if (user.length)
+            return res.json(true)
+        else
+            return res.json(false)
     }
 }
 

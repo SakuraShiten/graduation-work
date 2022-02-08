@@ -11,6 +11,7 @@ function News() {
         fetchNews().then(data => { setNews(data) })
     }, [])
 
+    
     const changeNews = (count) => {
         const newCount = (selectedNews + count > news.length - 1)
             ? 0
@@ -18,7 +19,6 @@ function News() {
                 ? news.length - 1
                 : selectedNews + count
         setSelectedNews(newCount)
-
     }
 
     return (
@@ -33,7 +33,7 @@ function News() {
                     </h4>
                     <h5>
                         {news
-                            ? news[selectedNews].date
+                            ? new Date(news[selectedNews].date).toLocaleString()
                             : ""
                         }
                     </h5>

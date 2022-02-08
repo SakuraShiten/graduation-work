@@ -8,6 +8,7 @@ import {
 import Booking from '../pages/Booking';
 import Main from '../pages/Main';
 import News from '../pages/News';
+import Moder from '../pages/Moder';
 import { publicRoutes } from '../utils/const'
 
 function AppRouter() {
@@ -15,6 +16,8 @@ function AppRouter() {
         <Route path="/" element={<Main />} />
         <Route path="/booking" element={<Booking />} />
         <Route path="/news" element={<News />} />
+        <Route path="/moder" element={<Moder />} />
+        <Route path="*" element={<Main />} />
     </Routes>;
 }
 

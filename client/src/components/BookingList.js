@@ -1,80 +1,73 @@
-import React, { useState } from 'react';
-import Modal from './Modal';
+import React, { useEffect, useState } from 'react';
+import Modal from './Modal/Modal';
 import Card from './UI/Card/Card';
 import Input from './UI/Input/Input';
-import UniversalButton from './UI/UniversalButton/UniversalButton';
+import Select from './UI/Select/Select';
+import UniversalButton from './UI/UniversalButton/UniversalButton'
+import { bookingService, nameDaysWeek } from '../utils/const'
+import { fetchDayBooking, fetchCreateClient, fetchCreateBooking } from '../API/publicAPI'
 
 function BookingList() {
 
-  const test = [
-    { dayName: "Понедельние", dayNumber: 12 },
-    { dayName: "Вторник", dayNumber: 14 },
-    { dayName: "Понедельние", dayNumber: 16 },
-    { dayName: "Вторник", dayNumber: 19 },
-    { dayName: "Понедельние", dayNumber: 10 },
-    { dayName: "Вторник", dayNumber: 1 },
-    { dayName: "Понедельние", dayNumber: 4 },
-  ]
-  const test1 = [
-    "18", "19", "20", "21", "22", "23", "0", "1", "2", "3", "4", "5", "6"
-  ]
+  const [activeModalDay, setActiveModalDay] = useState(false);
+  const [activeCardDay, setActiveCardDay] = useState(null);
 
-  const [activeCard, setActiveCard] = useState(null);
+  const [activeModalTimes, setActiveModalTimes] = useState(false);
+  const [activeCardTimes, setActiveCardTimes] = useState([]);
+  const [optionsTimes, setOptionsTimes] = useState([])
 
-  const [selectTimes, setSelectedTimes] = useState([]);
+  const [selectService, setSelectService] = useState(bookingService[0].value);
 
   const [bookingInfo, setBookingInfo] = useState({
     FIO: '',
     tel: '',
     email: '',
-    dataTime: ''
+    day: '',
+    service: selectService,
   });
+
+  useEffect(() => {
+    fetchDayBooking(activeCardDay).then(data => setOptionsTimes(data))
+  }, [activeCardDay])
+
+  const date = new Date();
+  const dateList = []
+  for (let i = 0; i < 7; i++) {
+    const dayCount = new Date(date.getTime() + ((i + 1) * 24 * 60 * 60 * 1000))
+    dateList.push({
+      dayName: nameDaysWeek[dayCount.getDay()],
+      dayNumber: dayCount.getDate()
+    })
+  }
 
   const listDefaultInput = [
     { placeholder: 'ФИО', data: "FIO" },
     { placeholder: 'Телефон', data: "tel" },
     { placeholder: 'Почта', data: "email" }
   ]
-  const [dataTime, setDataTime] = useState({});
-
-  const [activeModalDay, setActiveModalDay] = useState(false);
-  const [activeModalTimes, setActiveModalTimes] = useState(false);
-
-
-  const formAccept = (e) => {
-    e.preventDefault();
-    setDataTime({
-      day: activeCard,
-      times: [...selectTimes]
-    })
-    console.log(selectTimes);
-  }
 
   const selectCardTime = (item) => {
-
-    if (selectTimes.includes(item))
-      setSelectedTimes([...selectTimes.filter(t => t !== item)].sort())
-    else setSelectedTimes([...selectTimes, item].sort());
-
-
+    if (activeCardTimes.includes(item))
+      setActiveCardTimes([...activeCardTimes.filter(t => t !== item)])
+    else
+      setActiveCardTimes([...activeCardTimes, item].sort())
   }
 
-  var days = [
-    'Воскресенье',
-    'Понедельник',
-    'Вторник',
-    'Среда',
-    'Четверг',
-    'Пятница',
-    'Суббота'
-  ];
-  const d = new Date();
-  const n = d.getDay();
-
   const selectCardDay = (item) => {
-    setActiveCard(item)
+    setActiveCardDay(item)
+    setBookingInfo({ ...bookingInfo, day: item })
     setActiveModalDay(false)
     setActiveModalTimes(true)
+  }
+
+  const formAccept = async (e) => {
+    e.preventDefault();
+    const { _id } = await fetchCreateClient(bookingInfo.FIO, bookingInfo.tel, bookingInfo.email)
+    const s = await fetchCreateBooking(bookingInfo.service, bookingInfo.day, activeCardTimes, "asd", _id)
+
+
+
+    console.log(s);
   }
 
   return (
@@ -88,42 +81,55 @@ function BookingList() {
           />
         )
       }
+
+      <Select
+        options={bookingService}
+        setSelectService={setSelectService}
+        onChange={e => setBookingInfo({ ...bookingInfo, service: e.target.value })}
+      />
+
       <Input
         placeholder="Дата и время"
         readOnly
-        onClick={() => setActiveModalDay(true)}
-        value={activeCard && selectTimes[0] ? `${days[n]} - Выбранные часы: ${selectTimes.map(e => ' ' + e + ':00')}` : ""}
+        onClick={() => { setActiveModalDay(true); setActiveCardDay(null) }}
+        value={activeCardDay && activeCardTimes.length ? `${activeCardDay} число - Выбранные часы: ${activeCardTimes.map(e => ' ' + e + ':00')}` : ""}
       />
+
       <UniversalButton type="submit" style={{ marginTop: 30 }}>Подтвердить бронь</UniversalButton>
+
       <Modal
         setActiveModal={setActiveModalDay}
         activeModal={activeModalDay}
       >
-        {test.map(item =>
+        {dateList.map(item =>
           <Card
             key={item.dayNumber}
             body={item.dayName}
             header={item.dayNumber}
-            activeCard={item.dayNumber === activeCard}
-            onClick={() => selectCardDay(item.dayNumber)}
+            activeCard={item.dayNumber === activeCardDay}
+            onClick={() => {selectCardDay(item.dayNumber); setActiveCardTimes([])}}
           />)}
-
       </Modal>
 
       <Modal
         setActiveModal={setActiveModalTimes}
         activeModal={activeModalTimes}
       >
-        {test1.map(item =>
-          <Card
-            key={item}
-            body={""}
-            header={item + ":00"}
-            onClick={() => selectCardTime(item)}
-            activeCard={selectTimes.includes(item)}
-          />)}
+        {optionsTimes.length
+          ? optionsTimes.map(item =>
+            <Card
+              key={item}
+              body={""}
+              header={item + ":00"}
+              onClick={() => selectCardTime(item)}
+              activeCard={activeCardTimes.includes(item)}
+            />)
+          : <h2>Всё время занято</h2>
+        }
         <UniversalButton
-          onClick={() => setActiveModalTimes(false)}
+          style={{ width: "100%" }}
+          type="button"
+          onClick={() => { setActiveModalTimes(false) }}
         >
           Сохранить
         </UniversalButton>

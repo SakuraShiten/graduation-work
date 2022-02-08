@@ -1,0 +1,27 @@
+.block {
+  display: flex;
+
+  flex-direction: column;
+  width: 60vw;
+  margin-bottom: 30px;
+  font-family: Rubik;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 21px;
+  text-align: center;
+}
+.header {
+  width: 100%;
+  display: flex;
+  margin-bottom: 10px;
+}
+.header > p,
+.main > p {
+  margin-right: 40px;
+ 
+}
+.main {
+  display: flex;
+  margin-bottom: 10px;
+}

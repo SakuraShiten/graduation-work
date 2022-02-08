@@ -3,31 +3,29 @@ import ButtonNavBar from './UI/ButtonNavBar/ButtonNavBar';
 import MyNavBar from './UI/NavbarDesign/NavbarDesign';
 import NavIcon from './UI/NavIcon/NavIcon';
 import { publicRoutes } from '../utils/const' // поискать как правильно
-import { useNavigate} from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function Navbar() {
-    const [selectPage, setSelectedPage] = useState('/');
-    let navigate = useNavigate();
-    const changePage = (patch) => {
-        setSelectedPage(patch)
-        navigate(patch);
-    }
+
+    const navigate = useNavigate();
+    const location = useLocation();
+
     return <div>
         <MyNavBar>
-            <NavIcon onClick={() => { setSelectedPage('/') }} />
+            <NavIcon onClick={() => { navigate('/') }} />
             {publicRoutes.map(item =>
-
                 <ButtonNavBar
                     key={item.patch}
-                    onClick={() => { changePage(item.patch) }}
-                    selectPage={selectPage}
-                    urlPage={item.patch}
+                    onClick={() => { navigate(item.patch) }}
+                    activeButton={item.patch === location.pathname}
                 >
                     {item.name}
                 </ButtonNavBar>
 
             )}
+            <p onClick={() => { navigate('/moder') }} className="test">Авторизация<br></br>для сотрудник</p>
         </MyNavBar>
+
     </div>;
 }
 

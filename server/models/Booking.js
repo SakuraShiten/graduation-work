@@ -6,7 +6,7 @@ const schema = new Schema({
     time: { type: String, required: true },
     about: { type: String, required: true },
     status: { type: String, default: 'зарезервировано', required: true },
-    ownerClient: { type: Types.ObjectId, required: true },
+    ownerClient: { type: Types.ObjectId, required: true, ref: 'Client' },
     ownerUser: { type: Types.ObjectId }
 }, { versionKey: false })
 

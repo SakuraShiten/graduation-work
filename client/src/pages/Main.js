@@ -13,7 +13,7 @@ function Main() {
                         <p>Танцпол</p>
                         <p>Караоке зал</p>
                         <p>Большой банкетный зал</p>
-                        <p>Паровые коктейли</p>
+                        <p>Боулинг</p>
                     </div>
                     {
                         <UniversalButton styleWhite={true}>
