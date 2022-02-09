@@ -5,7 +5,7 @@ import classes from './CardClientBooking.module.css'
 
 function CardClientBooking({ item, setReloadData, reloadData }) {
     const { fio, tel, mail } = item.ownerClient;
-    const { data, service, time, _id } = item;
+    const { data, service, time, _id, status } = item;
 
 
     const cancelBooking = async (id) => {
@@ -25,14 +25,18 @@ function CardClientBooking({ item, setReloadData, reloadData }) {
             <div className={classes.main}>
                 <p><b>День</b> {data}</p>
                 <p><b>Услуга</b> {service}</p>
-                <p><b>Статус</b> {item.status}</p>
+                <p><b>Статус</b> {status}</p>
 
             </div>
             <p style={{ textAlign: 'left' }}><b>Время</b> {JSON.parse(time).map(i => i + ':00').join(", ")}</p>
-            <UniversalButton style={{ marginTop: 10 }}
-                onClick={() => cancelBooking(_id)}
-            >Отменить бронирование</UniversalButton>
-        </div>
+
+            {status !== "отменён"
+                ? < UniversalButton style={{ marginTop: 10 }}
+                    onClick={() => cancelBooking(_id)}
+                >Отменить бронирование</UniversalButton>
+                : null
+            }
+        </div >
     );
 }
 

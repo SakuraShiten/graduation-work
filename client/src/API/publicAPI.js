@@ -33,3 +33,12 @@ export const fetchCancelBooking = async (login, password, id) => {
     const { data } = await $host.post('api/booking/cancel', { login, password, id })
     return data
 }
+export const fetchCreateNews = async (news) => {
+    const { data } = await $host.post('api/news/create', news)
+    return data
+}
+
+export const fetchDeleteNews = async (id, login, password) => {
+    const { data } = await $host.post('api/news/delete', { id, login, password })
+    return data
+}

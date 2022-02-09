@@ -1,0 +1,12 @@
+.main {
+  display: flex;
+  width: 800px;
+  justify-content: space-between;
+
+  font-family: Rubik;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 21px;
+  margin-bottom: 20px;
+}
